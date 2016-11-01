@@ -7,7 +7,15 @@ import network.Message;
  */
 public class SuperPlayerMessage implements Message {
 
-    public String playerName;
+    private String playerName;
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
     public SuperPlayerMessage(String playerName) {
         this.playerName = playerName;
