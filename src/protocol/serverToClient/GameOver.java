@@ -1,6 +1,8 @@
 package protocol.serverToClient;
 
+import com.google.gson.Gson;
 import network.Message;
+import protocol.SuperPlayerMessage;
 
 import java.util.Map;
 
@@ -31,5 +33,17 @@ public class GameOver implements Message {
     public GameOver(String winnerName, Map<String, Integer> highscoreList) {
         this.winnerName = winnerName;
         this.highscoreList = highscoreList;
+    }
+
+    @Override
+    public String serializeToGson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        Gson gson = new Gson();
+        return gson.fromJson(in, GameOver.class);
     }
 }

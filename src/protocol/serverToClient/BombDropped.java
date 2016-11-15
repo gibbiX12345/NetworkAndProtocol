@@ -1,5 +1,6 @@
 package protocol.serverToClient;
 
+import com.google.gson.Gson;
 import network.Message;
 import protocol.SuperPlayerMessage;
 
@@ -40,5 +41,17 @@ public class BombDropped implements Message {
         this.id = id;
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    @Override
+    public String serializeToGson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        Gson gson = new Gson();
+        return gson.fromJson(in, BombDropped.class);
     }
 }

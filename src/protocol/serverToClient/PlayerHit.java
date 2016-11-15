@@ -1,5 +1,7 @@
 package protocol.serverToClient;
 
+import com.google.gson.Gson;
+import network.Message;
 import protocol.SuperPlayerMessage;
 
 /**
@@ -8,5 +10,11 @@ import protocol.SuperPlayerMessage;
 public class PlayerHit extends SuperPlayerMessage {
     public PlayerHit(String playerName) {
         super(playerName);
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        Gson gson = new Gson();
+        return gson.fromJson(in, PlayerHit.class);
     }
 }

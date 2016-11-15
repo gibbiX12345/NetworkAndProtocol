@@ -1,5 +1,7 @@
 package network;
 
+import protocol.serverToClient.Error;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,14 +48,15 @@ public class ServerProxy {
                 if (line.length() == 0)
                     break;
 
-                send(line);
+                Error error = new Error("HiiilffeeeeeeE!!! figg di du arschloch");
+                send(error);
             }
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static void send (String message){
-        writer.println(message);
+    public static void send (Message message){
+        writer.println(message.serializeToGson());
     }
 }

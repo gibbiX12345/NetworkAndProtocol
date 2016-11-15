@@ -1,5 +1,7 @@
 package protocol.clientToServer;
 
+import com.google.gson.Gson;
+import network.Message;
 import protocol.SuperPlayerMessage;
 
 /**
@@ -20,5 +22,11 @@ public class MovePlayer extends SuperPlayerMessage {
     public MovePlayer(String playerName, String direction) {
         super(playerName);
         this.direction = direction;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        Gson gson = new Gson();
+        return gson.fromJson(in, MovePlayer.class);
     }
 }

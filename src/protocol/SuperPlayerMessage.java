@@ -1,5 +1,6 @@
 package protocol;
 
+import com.google.gson.Gson;
 import network.Message;
 
 /**
@@ -21,4 +22,16 @@ public class SuperPlayerMessage implements Message {
         this.playerName = playerName;
     }
 
+
+    @Override
+    public String serializeToGson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        Gson gson = new Gson();
+        return gson.fromJson(in, SuperPlayerMessage.class);
+    }
 }

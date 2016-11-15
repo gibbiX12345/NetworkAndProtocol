@@ -1,8 +1,7 @@
 package network;
 
 
-import com.sun.javafx.collections.MappingChange;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import protocol.serverToClient.PlayerJoined;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,8 +9,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,22 +53,22 @@ public class Server extends Thread {
         }
     }
 
-    public static void broadcast(String message){
+    public static void broadcast(Message message){
         for (Socket client : clientList){
             try {
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                out.println(message);
+                out.println(message.serializeToGson());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void send(String message, String connectionId){
+    public static void send(Message message, String connectionId){
         Socket client = Server.clientConntectionMap.get(connectionId);
         try {
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-            out.println(message);
+            out.println(message.serializeToGson());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -91,7 +88,8 @@ public class Server extends Thread {
                         if (line.length() == 0)
                             break;
 
-                        Server.broadcast(line);
+                        PlayerJoined joined = new PlayerJoined("Peschä", 0, 0);
+                        Server.broadcast(joined);
                     }
                 } catch (IOException e){
                     e.printStackTrace();
