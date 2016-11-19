@@ -1,10 +1,11 @@
 package network;
 
-import com.google.gson.Gson;
-import protocol.SuperPlayerMessage;
-
 /**
- * Created by vmadmin on 31.10.2016.
+ * Alle Klassen f�r Nachrichten, welche zwischen dem Bomberman-Server und den Bomberman-Clients
+ * ausgetauscht werden, m�ssen dieses Interface implementieren.
+ * 
+ * @author Andres Scheidegger
+ *
  */
 public interface Message {
 

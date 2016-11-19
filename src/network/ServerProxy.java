@@ -1,18 +1,29 @@
 package network;
 
+import network.client.ClientApplicationInterface;
 import protocol.serverToClient.Error;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
  * Created by vmadmin on 01.11.2016.
  */
-public class ServerProxy {
+public class ServerProxy extends network.client.ServerProxy {
     private static PrintWriter writer;
+
+    /**
+     * Konstruktor. Initialisiert das neue ServerProxy-Objekt mit der Referenz auf das Empfängerobjekt.
+     *
+     * @param clientApplication Das Empfängerobjekt des Bomberman-Clients für Nachrichten.
+     */
+    public ServerProxy(ClientApplicationInterface clientApplication) {
+        super(clientApplication);
+    }
 
     public static void main(String[] args){
         String host = args[0];
@@ -44,19 +55,21 @@ public class ServerProxy {
                 }
             });
             serverThread.start();
-            while ((line = input.readLine()) != null){
+            /*while ((line = input.readLine()) != null){
                 if (line.length() == 0)
                     break;
 
                 Error error = new Error("HiiilffeeeeeeE!!! figg di du arschloch");
                 send(error);
-            }
-        } catch (Exception e){
+            }*/
+        } catch (ConnectException ce) {
+            System.out.println("Error: Server not found!");
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static void send (Message message){
+    public void send (Message message){
         writer.println(message.serializeToGson());
     }
 }
