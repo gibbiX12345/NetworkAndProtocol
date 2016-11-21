@@ -2,6 +2,8 @@ package network;
 
 import network.client.ClientApplicationInterface;
 import protocol.serverToClient.Error;
+import protocol.serverToClient.GameOver;
+import utils.GsonHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,13 +19,27 @@ public class ServerProxy extends network.client.ServerProxy {
     private static PrintWriter writer;
 
     /**
+     * Konstruktor. Initialisiert das neue ServerProxy-Objekt mit der Referenz auf das Empf�ngerobjekt.
+     *
+     * @param clientApplication Das Empf�ngerobjekt des Bomberman-Clients f�r Nachrichten.
+     */
+    private ServerProxy(ClientApplicationInterface clientApplication) {
+        super(clientApplication);
+        this.serverProxy = this;
+    }
+
+    /**
      * Konstruktor. Initialisiert das neue ServerProxy-Objekt mit der Referenz auf das Empfängerobjekt.
      *
      * @param clientApplication Das Empfängerobjekt des Bomberman-Clients für Nachrichten.
      */
-    public ServerProxy(ClientApplicationInterface clientApplication) {
-        super(clientApplication);
+
+    public static ServerProxy getInstance(ClientApplicationInterface clientApplication){
+        ServerProxy client = new ServerProxy(clientApplication);
+        return client;
     }
+
+    private static ServerProxy serverProxy;
 
     public static void main(String[] args){
         String host = args[0];
@@ -37,7 +53,6 @@ public class ServerProxy extends network.client.ServerProxy {
             System.out.println(in.readLine());
 
             System.out.println("> ");
-            String line;
             Thread serverThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -47,6 +62,7 @@ public class ServerProxy extends network.client.ServerProxy {
 
                         while (true) {
                             String input = in.readLine();
+                            serverProxy.clientApplication.handleMessage(GsonHelper.deserializeFromJson(input));
                             System.out.println("Server: " + input);
                         }
                     }catch (IOException e){

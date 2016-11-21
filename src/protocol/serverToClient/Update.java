@@ -30,9 +30,4 @@ public class Update implements Message {
         return gson.toJson(this);
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, Update.class);
-    }
 }

@@ -18,8 +18,8 @@ import java.util.List;
  */
 
 public class Server extends network.server.Server {
-    private static List<Socket> clientList = new ArrayList<>();
-    private static HashMap<String, Socket> clientConntectionMap = new HashMap<>();
+    public static List<Socket> clientList = new ArrayList<>();
+    public static HashMap<String, Socket> clientConntectionMap = new HashMap<>();
 
     /**
      * Konstruktor. Initialisiert das neue Server-Objekt mit der Referenz auf das Empfängerobjekt.
@@ -28,6 +28,12 @@ public class Server extends network.server.Server {
      */
     public Server(ServerApplicationInterface serverApplication) {
         super(serverApplication);
+    }
+
+    public Server getInstance(ServerApplicationInterface serverApplication){
+        Server server = new Server(serverApplication);
+        System.out.println("server created");
+        return server;
     }
 
     public void broadcast(Message message){

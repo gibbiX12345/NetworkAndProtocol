@@ -34,9 +34,4 @@ public class DropBomb extends SuperPlayerMessage {
         this.positionY = positionY;
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, DropBomb.class);
-    }
 }

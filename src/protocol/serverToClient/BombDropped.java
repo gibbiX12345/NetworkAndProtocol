@@ -49,9 +49,4 @@ public class BombDropped implements Message {
         return gson.toJson(this);
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, BombDropped.class);
-    }
 }

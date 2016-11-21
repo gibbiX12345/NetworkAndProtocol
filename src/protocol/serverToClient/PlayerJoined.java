@@ -34,9 +34,4 @@ public class PlayerJoined extends SuperPlayerMessage {
         this.initialY = initialY;
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, PlayerJoined.class);
-    }
 }

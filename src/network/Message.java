@@ -10,6 +10,4 @@ package network;
 public interface Message {
 
     public abstract String serializeToGson();
-
-    public abstract Message deserializeFromJson(String in);
 }

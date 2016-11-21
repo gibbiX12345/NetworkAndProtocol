@@ -1,6 +1,9 @@
 package protocol;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+import gson.RuntimeTypeAdapterFactory;
 import network.Message;
 
 /**
@@ -29,9 +32,4 @@ public class SuperPlayerMessage implements Message {
         return gson.toJson(this);
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, SuperPlayerMessage.class);
-    }
 }

@@ -28,10 +28,4 @@ public class StartGame implements Message{
         Gson gson = new Gson();
         return gson.toJson(this);
     }
-
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, StartGame.class);
-    }
 }

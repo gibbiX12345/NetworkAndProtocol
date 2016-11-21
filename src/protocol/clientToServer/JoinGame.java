@@ -12,9 +12,4 @@ public class JoinGame extends SuperPlayerMessage {
         super(playerName);
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, JoinGame.class);
-    }
 }

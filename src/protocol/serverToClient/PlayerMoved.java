@@ -24,9 +24,4 @@ public class PlayerMoved extends SuperPlayerMessage {
         this.direction = direction;
     }
 
-    @Override
-    public Message deserializeFromJson(String in) {
-        Gson gson = new Gson();
-        return gson.fromJson(in, PlayerMoved.class);
-    }
 }
