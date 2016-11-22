@@ -3,6 +3,7 @@ package network;
 import network.client.ClientApplicationInterface;
 import protocol.serverToClient.Error;
 import protocol.serverToClient.GameOver;
+import tubu.ScheissInterface;
 import utils.GsonHelper;
 
 import java.io.BufferedReader;
@@ -41,7 +42,11 @@ public class ServerProxy extends network.client.ServerProxy {
 
     private static ServerProxy serverProxy;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        ServerProxy client = new ServerProxy(new ScheissInterface());
+        client.runServer(args);
+    }
+    public void runServer(String[] args){
         String host = args[0];
         int port = Integer.parseInt(args[1]);
 
@@ -62,7 +67,7 @@ public class ServerProxy extends network.client.ServerProxy {
 
                         while (true) {
                             String input = in.readLine();
-                            serverProxy.clientApplication.handleMessage(GsonHelper.deserializeFromJson(input));
+                            clientApplication.handleMessage(GsonHelper.deserializeFromJson(input));
                             System.out.println("Server: " + input);
                         }
                     }catch (IOException e){

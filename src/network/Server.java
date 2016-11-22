@@ -2,6 +2,7 @@ package network;
 
 
 import network.server.ServerApplicationInterface;
+import protocol.serverToClient.Error;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -92,7 +93,8 @@ public class Server extends network.server.Server {
                         try {
                             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                            out.println("Hallo, ich bin der Server");
+                            Error error = new Error("OMG e fähler!");
+                            out.println(error.serializeToGson());
 
                             String input;
                             while (true){

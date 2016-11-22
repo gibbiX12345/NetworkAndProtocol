@@ -1,6 +1,7 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import network.Message;
 import protocol.SuperPlayerMessage;
 
@@ -26,7 +27,7 @@ public class Error implements Message {
     @Override
     public String serializeToGson() {
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson(this, new TypeToken<Error>(){}.getType());
     }
 
 }

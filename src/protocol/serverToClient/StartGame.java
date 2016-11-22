@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import network.Message;
 import protocol.SuperPlayerMessage;
 
+import java.lang.reflect.Type;
+
 /**
  * Created by vmadmin on 31.10.2016.
  */
@@ -26,6 +28,6 @@ public class StartGame implements Message{
     @Override
     public String serializeToGson() {
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson(this, this.getClass());
     }
 }
