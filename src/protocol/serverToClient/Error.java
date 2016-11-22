@@ -1,9 +1,10 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import network.Message;
-import protocol.SuperPlayerMessage;
 
 /**
  * Created by vmadmin on 31.10.2016.
@@ -11,6 +12,7 @@ import protocol.SuperPlayerMessage;
 public class Error implements Message {
 
     private String message;
+    private Class $type = Error.class;
 
     public String getMessage() {
         return message;
@@ -27,7 +29,7 @@ public class Error implements Message {
     @Override
     public String serializeToGson() {
         Gson gson = new Gson();
-        return gson.toJson(this, new TypeToken<Error>(){}.getType());
+        return gson.toJson(this);
     }
 
 }

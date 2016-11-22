@@ -2,7 +2,6 @@ package protocol.serverToClient;
 
 import com.google.gson.Gson;
 import network.Message;
-import protocol.SuperPlayerMessage;
 
 import java.util.Map;
 

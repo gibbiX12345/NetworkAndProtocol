@@ -1,8 +1,6 @@
 package network;
 
 import network.client.ClientApplicationInterface;
-import protocol.serverToClient.Error;
-import protocol.serverToClient.GameOver;
 import tubu.ScheissInterface;
 import utils.GsonHelper;
 
