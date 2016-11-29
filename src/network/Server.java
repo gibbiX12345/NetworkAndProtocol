@@ -31,14 +31,14 @@ public class Server extends network.server.Server {
         super(serverApplication);
     }
 
-    public Server getInstance(ServerApplicationInterface serverApplication){
+    public Server getInstance(ServerApplicationInterface serverApplication) {
         Server server = new Server(serverApplication);
         System.out.println("server created");
         return server;
     }
 
-    public void broadcast(Message message){
-        for (Socket client : clientList){
+    public void broadcast(Message message) {
+        for (Socket client : clientList) {
             try {
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
                 out.println(message.serializeToGson());
@@ -48,17 +48,17 @@ public class Server extends network.server.Server {
         }
     }
 
-    public void send(Message message, String connectionId){
+    public void send(Message message, String connectionId) {
         Socket client = Server.clientConntectionMap.get(connectionId);
         try {
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
             out.println(message.serializeToGson());
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void main (String[] args){
+    public static void main(String[] args) {
         int port = Integer.parseInt(args[0]);
 
         /*Thread readLineThread = new Thread(new Runnable() {
@@ -83,9 +83,9 @@ public class Server extends network.server.Server {
 
         readLineThread.start();*/
 
-        try (ServerSocket server = new ServerSocket(port) ){
+        try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("Server auf " + port + " gestartet ...");
-            while(true){
+            while (true) {
                 Socket client = server.accept();
                 Thread serverThread = new Thread(new Runnable() {
                     @Override
@@ -97,7 +97,7 @@ public class Server extends network.server.Server {
                             out.println(error.serializeToGson());
 
                             String input;
-                            while (true){
+                            while (true) {
                                 input = in.readLine();
                                 System.out.println("Client(" + client.getRemoteSocketAddress() + "): " + input);
                                 //out.println(input);
@@ -109,7 +109,7 @@ public class Server extends network.server.Server {
                                 if (client != null) {
                                     client.close();
                                 }
-                            } catch (IOException e){
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -119,7 +119,7 @@ public class Server extends network.server.Server {
                 Server.clientList.add(client);
                 Server.clientConntectionMap.put(client.getRemoteSocketAddress().toString(), client);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

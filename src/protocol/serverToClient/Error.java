@@ -1,14 +1,18 @@
 package protocol.serverToClient;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import gson.MessageAdapter;
+import gson.RuntimeTypeAdapterFactory;
 import network.Message;
+import sun.util.resources.cldr.as.LocaleNames_as;
+import utils.GsonHelper;
+
+import java.lang.reflect.Type;
 
 /**
  * Created by vmadmin on 31.10.2016.
- */
+         */
 public class Error implements Message {
 
     private String message;
@@ -28,8 +32,9 @@ public class Error implements Message {
 
     @Override
     public String serializeToGson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Message.class, new MessageAdapter());
+        Gson gsonExt = builder.create();
+        return gsonExt.toJson(this, Message.class);
     }
-
 }

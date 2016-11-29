@@ -1,5 +1,7 @@
 package network;
 
+import java.io.Serializable;
+
 /**
  * Alle Klassen f�r Nachrichten, welche zwischen dem Bomberman-Server und den Bomberman-Clients
  * ausgetauscht werden, m�ssen dieses Interface implementieren.
@@ -7,7 +9,7 @@ package network;
  * @author Andres Scheidegger
  *
  */
-public interface Message {
+public interface Message extends Serializable {
 
     public abstract String serializeToGson();
 }
