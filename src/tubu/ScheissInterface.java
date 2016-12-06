@@ -2,6 +2,7 @@ package tubu;
 
 import network.Message;
 import network.client.ClientApplicationInterface;
+import protocol.serverToClient.Error;
 
 /**
  * Created by vmadmin on 22.11.2016.
@@ -9,6 +10,7 @@ import network.client.ClientApplicationInterface;
 public class ScheissInterface implements ClientApplicationInterface {
     @Override
     public void handleMessage(Message message) {
-        System.out.println("wow e nachricht lol xdxd");
+        Error error = (Error) message;
+        System.out.println(error.getMessage());
     }
 }

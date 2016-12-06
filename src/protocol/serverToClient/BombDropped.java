@@ -44,6 +44,7 @@ public class BombDropped implements Message {
         this.positionY = positionY;
     }
 
+    public BombDropped(){}
 
     @Override
     public JSONObject serializeToGson() {
@@ -51,7 +52,7 @@ public class BombDropped implements Message {
         message.put("id", id);
         message.put("positionX", positionX);
         message.put("positionY", positionY);
-        message.put("className", this.getClass());
+        message.put("className", this.getClass().getName());
         return message;
     }
 

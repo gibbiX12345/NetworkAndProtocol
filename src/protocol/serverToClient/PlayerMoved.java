@@ -24,12 +24,13 @@ public class PlayerMoved extends SuperPlayerMessage {
         super(playerName);
         this.direction = direction;
     }
+    public PlayerMoved(){}
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject superPlayerMessage = super.serializeToGson();
         superPlayerMessage.put("direction", direction);
-        superPlayerMessage.put("className", this.getClass());
+        superPlayerMessage.put("className", this.getClass().getName());
         return superPlayerMessage;
     }
 

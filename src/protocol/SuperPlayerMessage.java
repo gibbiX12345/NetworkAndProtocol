@@ -22,6 +22,7 @@ public class SuperPlayerMessage implements Message {
         this.playerName = playerName;
     }
 
+    public SuperPlayerMessage(){}
     @Override
     public JSONObject serializeToGson() {
         JSONObject jsonObject = new JSONObject();

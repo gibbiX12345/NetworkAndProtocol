@@ -13,11 +13,12 @@ public class JoinGame extends SuperPlayerMessage {
         super(playerName);
     }
 
+    public JoinGame(){}
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject superPlayerMessage = super.serializeToGson();
-        superPlayerMessage.put("className", this.getClass());
+        superPlayerMessage.put("className", this.getClass().getName());
         return superPlayerMessage;
     }
 

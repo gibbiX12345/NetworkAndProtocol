@@ -25,12 +25,13 @@ public class Update implements Message {
         this.labyrinth = labyrinth;
     }
 
+    public Update(){}
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject message = new JSONObject();
         message.put("labyrinth", labyrinth);
-        message.put("className", this.getClass());
+        message.put("className", this.getClass().getName());
         return message;
     }
 

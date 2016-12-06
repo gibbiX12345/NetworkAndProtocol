@@ -34,13 +34,14 @@ public class DropBomb extends SuperPlayerMessage {
         this.positionX = positionX;
         this.positionY = positionY;
     }
+    public DropBomb(){}
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject superPlayerMessage = super.serializeToGson();
         superPlayerMessage.put("positionX", positionX);
         superPlayerMessage.put("positionY", positionY);
-        superPlayerMessage.put("className", this.getClass());
+        superPlayerMessage.put("className", this.getClass().getName());
         return superPlayerMessage;
     }
 

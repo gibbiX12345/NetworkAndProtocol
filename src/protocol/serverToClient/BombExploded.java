@@ -24,11 +24,12 @@ public class BombExploded implements Message {
     }
 
 
+    public BombExploded(){}
     @Override
     public JSONObject serializeToGson() {
         JSONObject message = new JSONObject();
         message.put("id", id);
-        message.put("className", this.getClass());
+        message.put("className", this.getClass().getName());
         return message;
     }
 

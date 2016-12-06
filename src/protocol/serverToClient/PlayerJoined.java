@@ -35,13 +35,14 @@ public class PlayerJoined extends SuperPlayerMessage {
         this.initialY = initialY;
     }
 
+    public PlayerJoined(){}
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject superPlayerMessage = super.serializeToGson();
         superPlayerMessage.put("initialX", initialX);
         superPlayerMessage.put("initialY", initialY);
-        superPlayerMessage.put("className", this.getClass());
+        superPlayerMessage.put("className", this.getClass().getName());
         return superPlayerMessage;
     }
 

@@ -34,6 +34,7 @@ public class GameOver implements Message {
         this.winnerName = winnerName;
         this.highscoreList = highscoreList;
     }
+    public GameOver(){}
 
 
     @Override
@@ -41,7 +42,7 @@ public class GameOver implements Message {
         JSONObject message = new JSONObject();
         message.put("winnerName", winnerName);
         message.put("highscoreList", highscoreList);
-        message.put("className", this.getClass());
+        message.put("className", this.getClass().getName());
         return message;
     }
 

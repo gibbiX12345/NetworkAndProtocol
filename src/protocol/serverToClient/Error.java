@@ -24,12 +24,14 @@ public class Error implements Message {
         this.message = message;
     }
 
+    public Error(){}
+
 
     @Override
     public JSONObject serializeToGson() {
         JSONObject message = new JSONObject();
-        message.put("message", message);
-        message.put("className", this.getClass());
+        message.put("message", this.message);
+        message.putOpt("className", this.getClass().getName());
         return message;
     }
 

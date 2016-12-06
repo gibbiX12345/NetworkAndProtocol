@@ -10,20 +10,24 @@ import protocol.SuperPlayerMessage;
  */
 public class StartGame implements Message {
 
-    private Object labyrinth;
+    private int[][] labyrinth;
+    //0 - Luft
+    //1 - Erde
+    //2 - Fels
 
-    public Object getLabyrinth() {
+    public int[][] getLabyrinth() {
         return labyrinth;
     }
 
-    public void setLabyrinth(Object labyrinth) {
+    public void setLabyrinth(int[][] labyrinth) {
         this.labyrinth = labyrinth;
     }
 
-    public StartGame(Object labyrinth) {
+    public StartGame(int[][] labyrinth) {
         this.labyrinth = labyrinth;
     }
 
+    public StartGame(){}
     @Override
     public JSONObject serializeToGson() {
         JSONObject jsonObject = new JSONObject();
@@ -34,7 +38,7 @@ public class StartGame implements Message {
     @Override
     public Message deserializeFromJson(String in) {
         JSONObject jsonObject = new JSONObject(in);
-        StartGame returnVal = new StartGame(jsonObject.getString("labyrinth"));
+        StartGame returnVal = new StartGame((int[][]) jsonObject.get("labyrinth"));
         return returnVal;
     }
 }
