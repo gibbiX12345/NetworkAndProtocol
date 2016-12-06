@@ -3,7 +3,9 @@ package utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.sun.corba.se.impl.presentation.rmi.ExceptionHandlerImpl;
 import gson.MessageAdapter;
+import json.JSONObject;
 import network.Message;
 
 /**
@@ -12,10 +14,15 @@ import network.Message;
 public class GsonHelper {
 
     public static Message deserializeFromJson(String in){
-        Gson gsonExt;
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Message.class   , new MessageAdapter());
-        gsonExt = builder.create();
-        return gsonExt.fromJson(in, Message.class);
+        JSONObject object = new JSONObject(in);
+        String className = object.getString("className");
+        try {
+            Class mClass = Class.forName(className);
+            Message message = (Message) mClass.newInstance();
+            return message.deserializeFromJson(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

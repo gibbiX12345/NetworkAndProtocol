@@ -1,6 +1,7 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import json.JSONObject;
 import network.Message;
 import protocol.SuperPlayerMessage;
 
@@ -34,4 +35,23 @@ public class PlayerJoined extends SuperPlayerMessage {
         this.initialY = initialY;
     }
 
+
+    @Override
+    public JSONObject serializeToGson() {
+        JSONObject superPlayerMessage = super.serializeToGson();
+        superPlayerMessage.put("initialX", initialX);
+        superPlayerMessage.put("initialY", initialY);
+        superPlayerMessage.put("className", this.getClass());
+        return superPlayerMessage;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        SuperPlayerMessage superPlayerMessage = (SuperPlayerMessage) super.deserializeFromJson(in);
+        this.setPlayerName(superPlayerMessage.getPlayerName());
+        this.initialX = jsonObject.getInt("initialX");
+        this.initialY = jsonObject.getInt("initialY");
+        return this;
+    }
 }

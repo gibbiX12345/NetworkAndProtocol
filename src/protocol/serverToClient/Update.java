@@ -1,7 +1,10 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import json.JSONObject;
 import network.Message;
+
+import java.util.Map;
 
 /**
  * Created by vmadmin on 31.10.2016.
@@ -24,9 +27,18 @@ public class Update implements Message {
 
 
     @Override
-    public String serializeToGson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+    public JSONObject serializeToGson() {
+        JSONObject message = new JSONObject();
+        message.put("labyrinth", labyrinth);
+        message.put("className", this.getClass());
+        return message;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        this.labyrinth = jsonObject.getString("labyrinth");
+        return this;
     }
 
 }

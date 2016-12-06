@@ -1,6 +1,7 @@
 package protocol.clientToServer;
 
 import com.google.gson.Gson;
+import json.JSONObject;
 import network.Message;
 import protocol.SuperPlayerMessage;
 
@@ -34,4 +35,22 @@ public class DropBomb extends SuperPlayerMessage {
         this.positionY = positionY;
     }
 
+    @Override
+    public JSONObject serializeToGson() {
+        JSONObject superPlayerMessage = super.serializeToGson();
+        superPlayerMessage.put("positionX", positionX);
+        superPlayerMessage.put("positionY", positionY);
+        superPlayerMessage.put("className", this.getClass());
+        return superPlayerMessage;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        SuperPlayerMessage superPlayerMessage = (SuperPlayerMessage) super.deserializeFromJson(in);
+        this.setPlayerName(superPlayerMessage.getPlayerName());
+        this.positionX = jsonObject.getInt("positionX");
+        this.positionY = jsonObject.getInt("positionY");
+        return this;
+    }
 }

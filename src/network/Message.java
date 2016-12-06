@@ -1,5 +1,7 @@
 package network;
 
+import json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -11,5 +13,6 @@ import java.io.Serializable;
  */
 public interface Message extends Serializable {
 
-    public abstract String serializeToGson();
+    public abstract JSONObject serializeToGson();
+    public abstract Message deserializeFromJson(String in);
 }

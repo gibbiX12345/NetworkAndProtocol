@@ -1,6 +1,7 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import json.JSONObject;
 import network.Message;
 
 import java.util.Map;
@@ -34,10 +35,22 @@ public class GameOver implements Message {
         this.highscoreList = highscoreList;
     }
 
+
     @Override
-    public String serializeToGson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+    public JSONObject serializeToGson() {
+        JSONObject message = new JSONObject();
+        message.put("winnerName", winnerName);
+        message.put("highscoreList", highscoreList);
+        message.put("className", this.getClass());
+        return message;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        this.winnerName = jsonObject.getString("winnerName");
+        this.highscoreList = (Map<String, Integer>) jsonObject.get("highscoreList");
+        return this;
     }
 
 }

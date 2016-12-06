@@ -1,14 +1,9 @@
 package protocol.serverToClient;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import gson.MessageAdapter;
-import gson.RuntimeTypeAdapterFactory;
+import json.JSONObject;
 import network.Message;
-import sun.util.resources.cldr.as.LocaleNames_as;
-import utils.GsonHelper;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by vmadmin on 31.10.2016.
@@ -16,7 +11,6 @@ import java.lang.reflect.Type;
 public class Error implements Message {
 
     private String message;
-    private Class $type = Error.class;
 
     public String getMessage() {
         return message;
@@ -30,11 +24,19 @@ public class Error implements Message {
         this.message = message;
     }
 
+
     @Override
-    public String serializeToGson() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Message.class, new MessageAdapter());
-        Gson gsonExt = builder.create();
-        return gsonExt.toJson(this, Message.class);
+    public JSONObject serializeToGson() {
+        JSONObject message = new JSONObject();
+        message.put("message", message);
+        message.put("className", this.getClass());
+        return message;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        this.message = jsonObject.getString("message");
+        return this;
     }
 }

@@ -1,6 +1,7 @@
 package protocol.serverToClient;
 
 import com.google.gson.Gson;
+import json.JSONObject;
 import network.Message;
 
 /**
@@ -22,9 +23,19 @@ public class BombExploded implements Message {
         this.id = id;
     }
 
+
     @Override
-    public String serializeToGson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+    public JSONObject serializeToGson() {
+        JSONObject message = new JSONObject();
+        message.put("id", id);
+        message.put("className", this.getClass());
+        return message;
+    }
+
+    @Override
+    public Message deserializeFromJson(String in) {
+        JSONObject jsonObject = new JSONObject(in);
+        this.id = jsonObject.getInt("id");
+        return this;
     }
 }
