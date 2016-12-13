@@ -1,14 +1,13 @@
 package network;
 
 import network.client.ClientApplicationInterface;
-import tubu.ScheissInterface;
-import utils.GsonHelper;
+import test.TestInterface;
+import utils.JsonHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -24,7 +23,6 @@ public class ServerProxy extends network.client.ServerProxy {
      */
     public ServerProxy(ClientApplicationInterface clientApplication, String host) {
         super(clientApplication);
-        this.serverProxy = this;
         this.runClient(host);
     }
 
@@ -39,12 +37,10 @@ public class ServerProxy extends network.client.ServerProxy {
         return client;
     }
 
-    private static ServerProxy serverProxy;
-
     public static void main(String[] args) {
-        ServerProxy client = new ServerProxy(new ScheissInterface(), "127.0.0.1");
+        ServerProxy client = new ServerProxy(new TestInterface(), "127.0.0.1");
     }
-    public void runClient(String host){
+    private void runClient(String host){
         int port = 12345;
         try{
             Thread serverThread = new Thread(new Runnable() {
@@ -53,10 +49,11 @@ public class ServerProxy extends network.client.ServerProxy {
                     try {
                         Socket socket = new Socket(host, port);
                         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        writer = new PrintWriter(socket.getOutputStream(), true);
 
                         while (true) {
                             String input = in.readLine();
-                            clientApplication.handleMessage(GsonHelper.deserializeFromJson(input));
+                            clientApplication.handleMessage(JsonHelper.deserializeFromJson(input));
                             System.out.println("Server: " + input);
                         }
                     }catch (IOException e){

@@ -1,7 +1,5 @@
 package protocol.serverToClient;
 
-import com.google.gson.*;
-import gson.MessageAdapter;
 import json.JSONObject;
 import network.Message;
 

@@ -67,7 +67,8 @@ public class Server extends network.server.Server {
             }
         });
     }
-    public void runServer() {
+
+    private void runServer() {
         int port = 12345;
         try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("Server auf " + port + " gestartet ...");
@@ -78,21 +79,24 @@ public class Server extends network.server.Server {
                     public void run() {
                         try {
                             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                            /* TEST
                             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+
                             Error error = new Error("OMG e fähler!");
-                            out.println(error.serializeToGson());
+                            out.println(error.serializeToGson());*/
 
                             String input;
                             while (true) {
                                 input = in.readLine();
                                 System.out.println("Client(" + client.getRemoteSocketAddress() + "): " + input);
-                                //out.println(input);
                             }
                         } catch (IOException e) {
                             System.out.println("Client(" + client.getRemoteSocketAddress() + ")disconnected");
                         } finally {
                             try {
                                 if (client != null) {
+                                    clientList.remove(client);
+                                    clientConntectionMap.remove(client.getRemoteSocketAddress().toString());
                                     client.close();
                                 }
                             } catch (IOException e) {

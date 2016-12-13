@@ -6,7 +6,7 @@ import network.Message;
 /**
  * Created by vmadmin on 21.11.2016.
  */
-public class GsonHelper {
+public class JsonHelper {
 
     public static Message deserializeFromJson(String in){
         JSONObject object = new JSONObject(in);
