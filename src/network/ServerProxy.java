@@ -22,9 +22,10 @@ public class ServerProxy extends network.client.ServerProxy {
      *
      * @param clientApplication Das Empf�ngerobjekt des Bomberman-Clients f�r Nachrichten.
      */
-    private ServerProxy(ClientApplicationInterface clientApplication) {
+    public ServerProxy(ClientApplicationInterface clientApplication, String host) {
         super(clientApplication);
         this.serverProxy = this;
+        this.runClient(host);
     }
 
     /**
@@ -33,29 +34,19 @@ public class ServerProxy extends network.client.ServerProxy {
      * @param clientApplication Das Empfängerobjekt des Bomberman-Clients für Nachrichten.
      */
 
-    public static ServerProxy getInstance(ClientApplicationInterface clientApplication){
-        ServerProxy client = new ServerProxy(clientApplication);
+    private static ServerProxy getInstance(ClientApplicationInterface clientApplication){
+        ServerProxy client = new ServerProxy(clientApplication, "127.0.0.1");
         return client;
     }
 
     private static ServerProxy serverProxy;
 
     public static void main(String[] args) {
-        ServerProxy client = new ServerProxy(new ScheissInterface());
-        client.runServer(args);
+        ServerProxy client = new ServerProxy(new ScheissInterface(), "127.0.0.1");
     }
-    public void runServer(String[] args){
-        String host = args[0];
-        int port = Integer.parseInt(args[1]);
-
+    public void runClient(String host){
+        int port = 12345;
         try{
-            Socket socket = new Socket(host, port);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println(in.readLine());
-
-            System.out.println("> ");
             Thread serverThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -74,15 +65,6 @@ public class ServerProxy extends network.client.ServerProxy {
                 }
             });
             serverThread.start();
-            /*while ((line = input.readLine()) != null){
-                if (line.length() == 0)
-                    break;
-
-                Error error = new Error("HiiilffeeeeeeE!!! figg di du arschloch");
-                send(error);
-            }*/
-        } catch (ConnectException ce) {
-            System.out.println("Error: Server not found!");
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -29,9 +29,10 @@ public class Server extends network.server.Server {
      */
     public Server(ServerApplicationInterface serverApplication) {
         super(serverApplication);
+        this.runServer();
     }
 
-    public Server getInstance(ServerApplicationInterface serverApplication) {
+    private Server getInstance(ServerApplicationInterface serverApplication) {
         Server server = new Server(serverApplication);
         System.out.println("server created");
         return server;
@@ -59,30 +60,15 @@ public class Server extends network.server.Server {
     }
 
     public static void main(String[] args) {
-        int port = Integer.parseInt(args[0]);
-
-        /*Thread readLineThread = new Thread(new Runnable() {
+        Server server = new Server(new ServerApplicationInterface() {
             @Override
-            public void run() {
-                String line;
-                BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            public void handleMessage(Message message, String connectionId) {
 
-                try {
-                    while ((line = input.readLine()) != null) {
-                        if (line.length() == 0)
-                            break;
-
-                        PlayerJoined joined = new PlayerJoined("Peschä", 0, 0);
-                        Server.broadcast(joined);
-                    }
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
             }
         });
-
-        readLineThread.start();*/
-
+    }
+    public void runServer() {
+        int port = 12345;
         try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("Server auf " + port + " gestartet ...");
             while (true) {
